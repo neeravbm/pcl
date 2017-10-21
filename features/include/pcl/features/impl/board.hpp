@@ -44,6 +44,10 @@
 #include <utility>
 #include <pcl/common/transforms.h>
 
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 //////////////////////////////////////////////////////////////////////////////////////////////
 template<typename PointInT, typename PointNT, typename PointOutT> void
 pcl::BOARDLocalReferenceFrameEstimation<PointInT, PointNT, PointOutT>::directedOrthogonalAxis (
@@ -469,6 +473,8 @@ pcl::BOARDLocalReferenceFrameEstimation<PointInT, PointNT, PointOutT>::computePo
 
   //float steep_prob = 0.0;
   float max_hole_prob = -std::numeric_limits<float>::max ();
+  
+  if (first_no_border < 0) first_no_border = 0;
 
   //find holes
   for (int ch = first_no_border; ch < check_margin_array_size_; ch++)
@@ -605,6 +611,7 @@ pcl::BOARDLocalReferenceFrameEstimation<PointInT, PointNT, PointOutT>::computeFe
   }
 
   this->resetData ();
+  #pragma omp parallel for
   for (size_t point_idx = 0; point_idx < indices_->size (); ++point_idx)
   {
     Eigen::Matrix3f currentLrf;
@@ -614,7 +621,11 @@ pcl::BOARDLocalReferenceFrameEstimation<PointInT, PointNT, PointOutT>::computeFe
     //if (rf.confidence == std::numeric_limits<float>::max ())
     if (computePointLRF ((*indices_)[point_idx], currentLrf) == std::numeric_limits<float>::max ())
     {
+	  // Visual Studio C++ doesn't support OpenMP3, which means critical block is not supported.
+      //#pragma omp critical outputDenseUpdate
+      //{
       output.is_dense = false;
+	  //}
     }
 
     for (int d = 0; d < 3; ++d)
