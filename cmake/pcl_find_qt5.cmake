@@ -7,8 +7,10 @@
 set(qt5_modules
 
 # Essentials
-    Qt5Core
-    Qt5Gui
+    #Qt5Core
+	Core
+    #Qt5Gui
+	Gui
     # Qt5Multimedia
     # Qt5Network
     # Qt5Qml
@@ -17,15 +19,18 @@ set(qt5_modules
     # Qt5Test
     # Qt5WebKit
     # Qt5WebKitWidgets
-    Qt5Widgets
+    #Qt5Widgets
+	Widgets
 
 # Add-ons
     # Qt5ActiveQt
-    Qt5Concurrent
+    #Qt5Concurrent
+	Concurrent
     # Qt5DBus
     # Qt5GraphicalEffects
     # Qt5ImageFormats
-    Qt5OpenGL
+    #Qt5OpenGL
+	OpenGL
     # Qt5PrintSupport
     # Qt5Declarative
     # Qt5Script
@@ -35,15 +40,14 @@ set(qt5_modules
     # Qt5XmlPatterns
 )
 
-# Populate qt4-style cmake variables.
 foreach(qt5_module ${qt5_modules})
-    find_package(${qt5_module} QUIET)
-    if(${qt5_module}_FOUND)
-        include_directories(${${qt5_module}_INCLUDE_DIRS})
-        add_definitions(${${qt5_module}_DEFINITIONS})
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${${qt5_module}_EXECUTABLE_COMPILE_FLAGS}")
-        list(APPEND QT_LIBRARIES ${${qt5_module}_LIBRARIES})
-    endif()
+    find_package(Qt5 COMPONENTS ${qt5_module} QUIET)
+    if(Qt5${qt5_module}_FOUND AND Qt5${qt5_module}_INCLUDE_DIRS)
+        include_directories(${Qt5${qt5_module}_INCLUDE_DIRS})
+        add_definitions(${Qt5${qt5_module}_DEFINITIONS})
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5${qt5_module}_EXECUTABLE_COMPILE_FLAGS}")
+        list(APPEND QT_LIBRARIES Qt5::${qt5_module})
+    endif(Qt5${qt5_module}_FOUND AND Qt5${qt5_module}_INCLUDE_DIRS)
 endforeach()
 
 # Prepare qt4-style cmake variables and macros.
