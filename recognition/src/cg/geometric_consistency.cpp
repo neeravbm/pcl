@@ -43,7 +43,7 @@
 #include "pcl/recognition/impl/cg/geometric_consistency.hpp"
 
 #ifdef PCL_ONLY_CORE_POINT_TYPES
-  PCL_INSTANTIATE_PRODUCT(GeometricConsistencyGrouping, ((pcl::PointXYZ)(pcl::PointXYZI)(pcl::PointXYZRGBA))((pcl::PointXYZ)(pcl::PointXYZI)(pcl::PointXYZRGBA)))
+  PCL_INSTANTIATE_PRODUCT(GeometricConsistencyGrouping, ((pcl::PointXYZ)(pcl::PointXYZI)(pcl::PointXYZRGBA)(pcl::PointXYZRGB))((pcl::PointXYZ)(pcl::PointXYZI)(pcl::PointXYZRGBA)(pcl::PointXYZRGB)))
 #else
   PCL_INSTANTIATE_PRODUCT(GeometricConsistencyGrouping, (PCL_XYZ_POINT_TYPES)(PCL_XYZ_POINT_TYPES))
 #endif
