@@ -267,9 +267,10 @@ namespace pcl
                                       const std::vector<int> &indices)
       {
         // Compute the principal directions via PCA
-        Eigen::Vector4f xyz_centroid;
-        Eigen::Matrix3f covariance_matrix;
-        computeMeanAndCovarianceMatrix (*cloud, indices, covariance_matrix, xyz_centroid);
+        Eigen::Vector4d xyz_centroid;
+        Eigen::Matrix3d covariance_matrix;
+		compute3DCentroid(*cloud, indices, xyz_centroid);
+		computeCovarianceMatrixNormalized(*cloud, indices, xyz_centroid, covariance_matrix);
 
         // Check if the covariance matrix is finite or not.
         for (int i = 0; i < 3; ++i)

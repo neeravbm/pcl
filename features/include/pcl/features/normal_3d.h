@@ -61,12 +61,13 @@ namespace pcl
                       Eigen::Vector4f &plane_parameters, float &curvature)
   {
     // Placeholder for the 3x3 covariance matrix at each surface patch
-    EIGEN_ALIGN16 Eigen::Matrix3f covariance_matrix;
+    EIGEN_ALIGN16 Eigen::Matrix3d covariance_matrix;
     // 16-bytes aligned placeholder for the XYZ centroid of a surface patch
-    Eigen::Vector4f xyz_centroid;
+    Eigen::Vector4d xyz_centroid;
 
+	compute3DCentroid(cloud, xyz_centroid);
     if (cloud.size () < 3 ||
-        computeMeanAndCovarianceMatrix (cloud, covariance_matrix, xyz_centroid) == 0)
+        computeCovarianceMatrixNormalized (cloud, xyz_centroid, covariance_matrix) == 0)
     {
       plane_parameters.setConstant (std::numeric_limits<float>::quiet_NaN ());
       curvature = std::numeric_limits<float>::quiet_NaN ();
@@ -74,7 +75,7 @@ namespace pcl
     }
 
     // Get the plane normal and surface curvature
-    solvePlaneParameters (covariance_matrix, xyz_centroid, plane_parameters, curvature);
+    solvePlaneParameters (covariance_matrix.cast<float>(), xyz_centroid.cast<float>(), plane_parameters, curvature);
     return true;
   }
 
@@ -94,18 +95,20 @@ namespace pcl
                       Eigen::Vector4f &plane_parameters, float &curvature)
   {
     // Placeholder for the 3x3 covariance matrix at each surface patch
-    EIGEN_ALIGN16 Eigen::Matrix3f covariance_matrix;
+    EIGEN_ALIGN16 Eigen::Matrix3d covariance_matrix;
     // 16-bytes aligned placeholder for the XYZ centroid of a surface patch
-    Eigen::Vector4f xyz_centroid;
+    Eigen::Vector4d xyz_centroid;
+	compute3DCentroid(cloud, indices, xyz_centroid);
+	
     if (indices.size () < 3 ||
-        computeMeanAndCovarianceMatrix (cloud, indices, covariance_matrix, xyz_centroid) == 0)
+        computeCovarianceMatrixNormalized(cloud, indices, xyz_centroid, covariance_matrix) == 0)
     {
       plane_parameters.setConstant (std::numeric_limits<float>::quiet_NaN ());
       curvature = std::numeric_limits<float>::quiet_NaN ();
       return false;
     }
     // Get the plane normal and surface curvature
-    solvePlaneParameters (covariance_matrix, xyz_centroid, plane_parameters, curvature);
+    solvePlaneParameters (covariance_matrix.cast<float>(), xyz_centroid.cast<float>(), plane_parameters, curvature);
     return true;
   }
 
