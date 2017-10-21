@@ -44,6 +44,10 @@
 #include <pcl/kdtree/flann.h>
 #include <pcl/console/print.h>
 
+#ifdef _OPENMP
+#include <omp.h>
+#endif // _OPENMP
+
 ///////////////////////////////////////////////////////////////////////////////////////////
 template <typename PointT, typename Dist>
 pcl::KdTreeFLANN<PointT, Dist>::KdTreeFLANN (bool sorted)
@@ -186,6 +190,10 @@ pcl::KdTreeFLANN<PointT, Dist>::radiusSearch (const PointT &point, double radius
     params.max_neighbors = -1;  // return all neighbors in radius
   else
     params.max_neighbors = max_nn;
+
+#ifdef _OPENMP
+  params.cores = omp_get_max_threads();
+#endif // _OPENMP
 
   int neighbors_in_radius = flann_index_->radiusSearch (::flann::Matrix<float> (&query[0], 1, dim_),
       indices,
