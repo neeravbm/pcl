@@ -115,7 +115,7 @@ namespace pcl
 
           class scalar_property_definition_callbacks_type
           {
-            private:
+            public:
               template <typename T>
               struct callbacks_element
               {
@@ -123,7 +123,8 @@ namespace pcl
                 typedef T scalar_type;
                 typename scalar_property_definition_callback_type<scalar_type>::type callback;
               };
-             
+            
+            private: 
               typedef boost::mpl::inherit_linearly<
                 scalar_types,
                 boost::mpl::inherit<
@@ -208,6 +209,15 @@ namespace pcl
      
           class list_property_definition_callbacks_type
           {
+            public:
+              template <typename T>
+              struct callbacks_element
+              {
+                typedef typename T::first size_type;
+                typedef typename T::second scalar_type;
+                typename list_property_definition_callback_type<size_type, scalar_type>::type callback;
+              };
+
             private:
               template <typename T> struct pair_with : boost::mpl::pair<T,boost::mpl::_> {};
               template<typename Sequence1, typename Sequence2>
@@ -217,14 +227,6 @@ namespace pcl
                     boost::mpl::joint_view<
                       boost::mpl::_1,boost::mpl::transform<Sequence2, pair_with<boost::mpl::_2> > > >
                 {};
-
-              template <typename T>
-              struct callbacks_element
-              {
-                typedef typename T::first size_type;
-                typedef typename T::second scalar_type;
-                typename list_property_definition_callback_type<size_type, scalar_type>::type callback;
-              };
            
               typedef boost::mpl::inherit_linearly<sequence_product<size_types, scalar_types>::type, boost::mpl::inherit<boost::mpl::_1, callbacks_element<boost::mpl::_2> > >::type callbacks;
               callbacks callbacks_;
