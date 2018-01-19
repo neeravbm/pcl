@@ -612,7 +612,7 @@ pcl::BOARDLocalReferenceFrameEstimation<PointInT, PointNT, PointOutT>::computeFe
 
   this->resetData ();
   #pragma omp parallel for
-  for (size_t point_idx = 0; point_idx < indices_->size (); ++point_idx)
+  for (int point_idx = 0; point_idx < indices_->size (); ++point_idx)
   {
     Eigen::Matrix3f currentLrf;
     PointOutT &rf = output[point_idx];
