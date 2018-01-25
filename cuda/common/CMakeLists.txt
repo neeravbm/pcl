@@ -29,7 +29,7 @@ set(common_incs
     )
 
 include_directories(./include)
-#set(LIB_NAME pcl_${SUBSYS_NAME})
+#set(LIB_NAME "${PREPEND_LIB_NAME}pcl_${SUBSYS_NAME}")
 set(EXT_DEPS CUDA)
 #PCL_MAKE_PKGCONFIG(${LIB_NAME} ${SUBSYS_NAME} "${SUBSYS_DESC}"
 #    "${SUBSYS_DEPS}" "${EXT_DEPS}" "" "" "")

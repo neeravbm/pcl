@@ -14,43 +14,43 @@ if(BUILD_surface_on_nurbs)
 	
     PCL_ADD_EXAMPLE(pcl_test_nurbs_fitting_surface
             FILES test_nurbs_fitting_surface.cpp
-                    LINK_WITH pcl_common pcl_io pcl_surface pcl_visualization)
+                    LINK_WITH "${PREPEND_LIB_NAME}pcl_common" "${PREPEND_LIB_NAME}pcl_io" "${PREPEND_LIB_NAME}pcl_surface" "${PREPEND_LIB_NAME}pcl_visualization")
                     
     PCL_ADD_EXAMPLE(pcl_example_nurbs_fitting_surface
             FILES example_nurbs_fitting_surface.cpp
-                    LINK_WITH pcl_common pcl_io pcl_surface pcl_visualization)
+                    LINK_WITH "${PREPEND_LIB_NAME}pcl_common" "${PREPEND_LIB_NAME}pcl_io" "${PREPEND_LIB_NAME}pcl_surface" "${PREPEND_LIB_NAME}pcl_visualization")
 
     PCL_ADD_EXAMPLE(pcl_example_nurbs_viewer_surface
             FILES example_nurbs_viewer_surface.cpp
-                    LINK_WITH pcl_common pcl_io pcl_surface pcl_visualization)
+                    LINK_WITH "${PREPEND_LIB_NAME}pcl_common" "${PREPEND_LIB_NAME}pcl_io" "${PREPEND_LIB_NAME}pcl_surface" "${PREPEND_LIB_NAME}pcl_visualization")
                     
     PCL_ADD_EXAMPLE(pcl_example_nurbs_fitting_closed_curve
         	FILES example_nurbs_fitting_closed_curve.cpp
-                	LINK_WITH pcl_common pcl_io pcl_surface pcl_visualization)
+                	LINK_WITH "${PREPEND_LIB_NAME}pcl_common" "${PREPEND_LIB_NAME}pcl_io" "${PREPEND_LIB_NAME}pcl_surface" "${PREPEND_LIB_NAME}pcl_visualization")
                 	
 	PCL_ADD_EXAMPLE(pcl_example_nurbs_fitting_curve2d
         	FILES example_nurbs_fitting_curve2d.cpp
-                	LINK_WITH pcl_common pcl_io pcl_surface pcl_visualization)
+                	LINK_WITH "${PREPEND_LIB_NAME}pcl_common" "${PREPEND_LIB_NAME}pcl_io" "${PREPEND_LIB_NAME}pcl_surface" "${PREPEND_LIB_NAME}pcl_visualization")
     
     PCL_ADD_EXAMPLE(pcl_example_nurbs_fitting_closed_curve3d
         	FILES example_nurbs_fitting_closed_curve3d.cpp
-                	LINK_WITH pcl_common pcl_io pcl_surface pcl_visualization)
+                	LINK_WITH "${PREPEND_LIB_NAME}pcl_common" "${PREPEND_LIB_NAME}pcl_io" "${PREPEND_LIB_NAME}pcl_surface" "${PREPEND_LIB_NAME}pcl_visualization")
                                        
 #	PCL_ADD_EXAMPLE(pcl_test_nurbs_fitting_object
 #					FILES test_nurbs_fitting_object.cpp
-#	                LINK_WITH pcl_common pcl_io pcl_surface pcl_visualization)
+#	                LINK_WITH "${PREPEND_LIB_NAME}pcl_common" "${PREPEND_LIB_NAME}pcl_io" "${PREPEND_LIB_NAME}pcl_surface" "${PREPEND_LIB_NAME}pcl_visualization")
 	                
 #	PCL_ADD_EXAMPLE(pcl_example_nurbs_fitting_object
 #					FILES example_nurbs_fitting_object.cpp
-#	                LINK_WITH pcl_common pcl_io pcl_surface pcl_visualization)
+#	                LINK_WITH "${PREPEND_LIB_NAME}pcl_common" "${PREPEND_LIB_NAME}pcl_io" "${PREPEND_LIB_NAME}pcl_surface" "${PREPEND_LIB_NAME}pcl_visualization")
 
 #	PCL_ADD_EXAMPLE(pcl_example_nurbs_fitting_cube
 #					FILES example_nurbs_fitting_cube.cpp
-#	                LINK_WITH pcl_common pcl_io pcl_surface pcl_visualization)
+#	                LINK_WITH "${PREPEND_LIB_NAME}pcl_common" "${PREPEND_LIB_NAME}pcl_io" "${PREPEND_LIB_NAME}pcl_surface" "${PREPEND_LIB_NAME}pcl_visualization")
 	                
 #	PCL_ADD_EXAMPLE(pcl_example_nurbs_fitting_topo
 #					FILES example_nurbs_fitting_topo.cpp
-#	                LINK_WITH pcl_common pcl_io pcl_surface pcl_visualization)
+#	                LINK_WITH "${PREPEND_LIB_NAME}pcl_common" "${PREPEND_LIB_NAME}pcl_io" "${PREPEND_LIB_NAME}pcl_surface" "${PREPEND_LIB_NAME}pcl_visualization")
                 
   endif(BUILD_visualization)
 endif(BUILD_surface_on_nurbs)

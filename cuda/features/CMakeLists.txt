@@ -20,7 +20,7 @@ if (build)
         include/pcl/cuda/features/normal_3d.h
         )
 
-    set(LIB_NAME "pcl_${SUBSYS_NAME}")
+    set(LIB_NAME "${PREPEND_LIB_NAME}pcl_${SUBSYS_NAME}")
     include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
     PCL_CUDA_ADD_LIBRARY("${LIB_NAME}" "${SUBSYS_NAME}" ${srcs} ${incs})
 

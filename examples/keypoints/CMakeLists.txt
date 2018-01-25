@@ -13,13 +13,13 @@ if(BUILD_visualization)
 	endif(NOT VTK_FOUND)
 	
   PCL_ADD_EXAMPLE(pcl_example_sift_keypoint_estimation FILES example_sift_keypoint_estimation.cpp
-		                LINK_WITH pcl_common  pcl_visualization pcl_keypoints pcl_io)
+		                LINK_WITH "${PREPEND_LIB_NAME}pcl_common"  "${PREPEND_LIB_NAME}pcl_visualization" "${PREPEND_LIB_NAME}pcl_keypoints" "${PREPEND_LIB_NAME}pcl_io")
   PCL_ADD_EXAMPLE(pcl_example_sift_normal_keypoint_estimation FILES example_sift_normal_keypoint_estimation.cpp
-		                LINK_WITH pcl_common  pcl_visualization pcl_keypoints pcl_io)
+		                LINK_WITH "${PREPEND_LIB_NAME}pcl_common"  "${PREPEND_LIB_NAME}pcl_visualization" "${PREPEND_LIB_NAME}pcl_keypoints" "${PREPEND_LIB_NAME}pcl_io")
   PCL_ADD_EXAMPLE(pcl_example_sift_z_keypoint_estimation FILES example_sift_z_keypoint_estimation.cpp
-		                LINK_WITH pcl_common  pcl_visualization pcl_keypoints pcl_io)
+		                LINK_WITH "${PREPEND_LIB_NAME}pcl_common"  "${PREPEND_LIB_NAME}pcl_visualization" "${PREPEND_LIB_NAME}pcl_keypoints" "${PREPEND_LIB_NAME}pcl_io")
 
   PCL_ADD_EXAMPLE(pcl_example_get_keypoints_indices FILES example_get_keypoints_indices.cpp
-                  LINK_WITH pcl_common pcl_keypoints pcl_io)
+                  LINK_WITH "${PREPEND_LIB_NAME}pcl_common" "${PREPEND_LIB_NAME}pcl_keypoints" "${PREPEND_LIB_NAME}pcl_io")
 
 endif(BUILD_visualization)

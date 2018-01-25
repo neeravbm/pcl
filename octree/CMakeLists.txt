@@ -44,7 +44,7 @@ if(build)
         "include/pcl/${SUBSYS_NAME}/impl/octree_pointcloud_adjacency.hpp"
         )
 
-    set(LIB_NAME "pcl_${SUBSYS_NAME}")
+    set(LIB_NAME "${PREPEND_LIB_NAME}pcl_${SUBSYS_NAME}")
     PCL_ADD_LIBRARY("${LIB_NAME}" "${SUBSYS_NAME}" ${srcs} ${incs} ${impl_incs})
     target_link_libraries("${LIB_NAME}")
     target_include_directories(${LIB_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")

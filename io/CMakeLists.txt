@@ -195,9 +195,9 @@ if(build)
         "include/pcl/${SUBSYS_NAME}/ply/ply.h"
         "include/pcl/${SUBSYS_NAME}/ply/ply_parser.h"
        )
-    PCL_ADD_LIBRARY(pcl_io_ply "${SUBSYS_NAME}" ${PLY_SOURCES} ${PLY_INCLUDES})
+    PCL_ADD_LIBRARY("${PREPEND_LIB_NAME}pcl_io_ply" "${SUBSYS_NAME}" ${PLY_SOURCES} ${PLY_INCLUDES})
     PCL_ADD_INCLUDES("${SUBSYS_NAME}" "${SUBSYS_NAME}/ply" ${PLY_INCLUDES})
-    target_include_directories(pcl_io_ply PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+    target_include_directories("${PREPEND_LIB_NAME}pcl_io_ply" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 
     set(srcs
@@ -316,13 +316,13 @@ if(build)
         )
     endif()
 
-    set(LIB_NAME "pcl_${SUBSYS_NAME}")
+    set(LIB_NAME "${PREPEND_LIB_NAME}pcl_${SUBSYS_NAME}")
 
     add_definitions(${VTK_DEFINES})
     PCL_ADD_LIBRARY("${LIB_NAME}" "${SUBSYS_NAME}" ${srcs} ${incs} ${compression_incs} ${impl_incs} ${OPENNI_INCLUDES} ${OPENNI2_INCLUDES})
     target_include_directories(${LIB_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include" ${VTK_INCLUDE_DIRECTORIES})
     link_directories(${VTK_LINK_DIRECTORIES})
-    target_link_libraries("${LIB_NAME}" pcl_common pcl_io_ply ${VTK_LIBRARIES} )
+    target_link_libraries("${LIB_NAME}" "${PREPEND_LIB_NAME}pcl_common" "${PREPEND_LIB_NAME}pcl_io_ply" ${VTK_LIBRARIES} )
     if(PNG_FOUND)
       target_link_libraries("${LIB_NAME}" ${PNG_LIBRARIES})
     endif(PNG_FOUND)

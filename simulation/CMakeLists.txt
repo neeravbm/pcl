@@ -30,7 +30,7 @@ if(build)
         "include/pcl/${SUBSYS_NAME}/sum_reduce.h"
         )
 
-    set(LIB_NAME "pcl_${SUBSYS_NAME}")
+    set(LIB_NAME "${PREPEND_LIB_NAME}pcl_${SUBSYS_NAME}")
     include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include"
                         "${GLEW_INCLUDE_DIR}")
 

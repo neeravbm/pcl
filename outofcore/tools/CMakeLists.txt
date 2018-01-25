@@ -1,9 +1,9 @@
-# pcl_outofcore_process
+# "${PREPEND_LIB_NAME}pcl_outofcore"_process
 PCL_ADD_EXECUTABLE(pcl_outofcore_process "${SUBSYS_NAME}" outofcore_process.cpp)
-target_link_libraries(pcl_outofcore_process pcl_common pcl_filters pcl_io pcl_octree pcl_outofcore)
+target_link_libraries(pcl_outofcore_process "${PREPEND_LIB_NAME}pcl_common" "${PREPEND_LIB_NAME}pcl_filters" "${PREPEND_LIB_NAME}pcl_io" "${PREPEND_LIB_NAME}pcl_octree" "${PREPEND_LIB_NAME}pcl_outofcore")
 
 PCL_ADD_EXECUTABLE(pcl_outofcore_print "${SUBSYS_NAME}" outofcore_print.cpp)
-target_link_libraries(pcl_outofcore_print pcl_common pcl_filters pcl_io pcl_octree pcl_outofcore)
+target_link_libraries(pcl_outofcore_print "${PREPEND_LIB_NAME}pcl_common" "${PREPEND_LIB_NAME}pcl_filters" "${PREPEND_LIB_NAME}pcl_io" "${PREPEND_LIB_NAME}pcl_octree" "${PREPEND_LIB_NAME}pcl_outofcore")
 
 if(NOT VTK_FOUND)
   set(DEFAULT FALSE)
@@ -16,7 +16,7 @@ else(NOT VTK_FOUND)
   include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
   
   if("${VTK_MAJOR_VERSION}.${VTK_MINOR_VERSION}" VERSION_GREATER "5.8")
-    # pcl_outofcore_viewer uses some functions not present in vtk 5.8
+    # "${PREPEND_LIB_NAME}pcl_outofcore"_viewer uses some functions not present in vtk 5.8
   
     set(srcs outofcore_viewer.cpp
            ../src/visualization/camera.cpp
@@ -27,9 +27,9 @@ else(NOT VTK_FOUND)
            ../src/visualization/scene.cpp
            ../src/visualization/viewport.cpp)
   
-    # pcl_outofcore_viewer
+    # "${PREPEND_LIB_NAME}pcl_outofcore"_viewer
     PCL_ADD_EXECUTABLE_OPT_BUNDLE(pcl_outofcore_viewer "${SUBSYS_NAME}" ${srcs})
-    target_link_libraries(pcl_outofcore_viewer pcl_common pcl_io pcl_outofcore pcl_visualization pcl_octree pcl_filters)
+    target_link_libraries(pcl_outofcore_viewer "${PREPEND_LIB_NAME}pcl_common" "${PREPEND_LIB_NAME}pcl_io" "${PREPEND_LIB_NAME}pcl_outofcore" "${PREPEND_LIB_NAME}pcl_visualization" "${PREPEND_LIB_NAME}pcl_octree" "${PREPEND_LIB_NAME}pcl_filters")
   
   endif("${VTK_MAJOR_VERSION}.${VTK_MINOR_VERSION}" VERSION_GREATER "5.8")
 endif(NOT VTK_FOUND)

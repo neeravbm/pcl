@@ -19,7 +19,7 @@ if (build)
 
     get_filename_component(UTILS_INC "${CMAKE_CURRENT_SOURCE_DIR}/../utils/include" REALPATH)
 
-    set(LIB_NAME "pcl_${SUBSYS_NAME}")
+    set(LIB_NAME "${PREPEND_LIB_NAME}pcl_${SUBSYS_NAME}")
     include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include" ${UTILS_INC})
     PCL_CUDA_ADD_LIBRARY("${LIB_NAME}" "${SUBSYS_NAME}" ${srcs} ${incs})
 

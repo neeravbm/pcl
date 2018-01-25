@@ -154,11 +154,11 @@ if(build)
         ${HULL_IMPLS}
         )
 
-    set(LIB_NAME "pcl_${SUBSYS_NAME}")
+    set(LIB_NAME "${PREPEND_LIB_NAME}pcl_${SUBSYS_NAME}")
     include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include" ${VTK_INCLUDE_DIRS} "${CMAKE_CURRENT_SOURCE_DIR}")
     link_directories(${VTK_LIBRARY_DIRS})
     PCL_ADD_LIBRARY("${LIB_NAME}" "${SUBSYS_NAME}" ${srcs} ${incs} ${impl_incs} ${VTK_SMOOTHING_INCLUDES} ${POISSON_INCLUDES} ${OPENNURBS_INCLUDES} ${ON_NURBS_INCLUDES})
-    target_link_libraries("${LIB_NAME}" pcl_common pcl_search pcl_kdtree pcl_octree ${VTK_LIBRARIES} ${ON_NURBS_LIBRARIES})
+    target_link_libraries("${LIB_NAME}" "${PREPEND_LIB_NAME}pcl_common" "${PREPEND_LIB_NAME}pcl_search" "${PREPEND_LIB_NAME}pcl_kdtree" "${PREPEND_LIB_NAME}pcl_octree" ${VTK_LIBRARIES} ${ON_NURBS_LIBRARIES})
     if(QHULL_FOUND)
       target_link_libraries("${LIB_NAME}" ${QHULL_LIBRARIES})
     endif(QHULL_FOUND)

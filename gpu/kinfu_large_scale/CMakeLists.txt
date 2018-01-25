@@ -31,7 +31,7 @@ if (build)
 	source_group("Source Files\\cuda" FILES ${cuda} )    
 	source_group("Source Files" FILES ${srcs} )		
 	
-	set(LIB_NAME "pcl_${SUBSYS_NAME}")
+	set(LIB_NAME "${PREPEND_LIB_NAME}pcl_${SUBSYS_NAME}")
 	include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include" "${CMAKE_CURRENT_SOURCE_DIR}/src" ${CUDA_INCLUDE_DIRS})
 
 	if (UNIX OR APPLE)

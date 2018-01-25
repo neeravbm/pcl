@@ -147,10 +147,10 @@ if(build)
             )
     endif(HAVE_METSLIB)
 
-    set(LIB_NAME "pcl_${SUBSYS_NAME}")
+    set(LIB_NAME "${PREPEND_LIB_NAME}pcl_${SUBSYS_NAME}")
     include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
     PCL_ADD_LIBRARY("${LIB_NAME}" "${SUBSYS_NAME}" ${srcs} ${incs} ${impl_incs} ${face_detection_incs} ${ransac_based_incs} ${ransac_based_impl_incs} ${hv_incs} ${hv_impl_incs} ${cg_incs} ${cg_impl_incs} ${metslib_incs})
-    target_link_libraries("${LIB_NAME}" pcl_common pcl_kdtree pcl_octree pcl_search pcl_features pcl_registration pcl_sample_consensus pcl_filters pcl_ml pcl_io)
+    target_link_libraries("${LIB_NAME}" "${PREPEND_LIB_NAME}pcl_common" "${PREPEND_LIB_NAME}pcl_kdtree" "${PREPEND_LIB_NAME}pcl_octree" "${PREPEND_LIB_NAME}pcl_search" "${PREPEND_LIB_NAME}pcl_features" "${PREPEND_LIB_NAME}pcl_registration" "${PREPEND_LIB_NAME}pcl_sample_consensus" "${PREPEND_LIB_NAME}pcl_filters" "${PREPEND_LIB_NAME}pcl_ml" "${PREPEND_LIB_NAME}pcl_io")
     PCL_MAKE_PKGCONFIG("${LIB_NAME}" "${SUBSYS_NAME}" "${SUBSYS_DESC}" "${SUBSYS_DEPS}" "" "" "" "")
     # Install include files
     PCL_ADD_INCLUDES("${SUBSYS_NAME}" "${SUBSYS_NAME}" ${incs})
