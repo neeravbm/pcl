@@ -161,6 +161,7 @@ if(build)
 	
     set(LIB_NAME "pcl_${SUBSYS_NAME}")
     PCL_ADD_LIBRARY("${LIB_NAME}" "${SUBSYS_NAME}" ${srcs} ${incs} ${impl_incs})
+	set_target_properties("${LIB_NAME}" PROPERTIES OUTPUT_NAME "${LIB_NAME_PREFIX}${LIB_NAME}")
     target_link_libraries("${LIB_NAME}" pcl_common pcl_search pcl_kdtree pcl_octree pcl_filters)
     PCL_MAKE_PKGCONFIG("${LIB_NAME}" "${SUBSYS_NAME}" "${SUBSYS_DESC}" "${SUBSYS_DEPS}" "" "" "" "")
     # Install headers

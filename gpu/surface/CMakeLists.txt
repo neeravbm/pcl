@@ -28,6 +28,7 @@ if(build)
 	set(LIB_NAME "pcl_${SUBSYS_NAME}")
 	include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include" "${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_SOURCE_DIR}/src/cuda")
 	PCL_CUDA_ADD_LIBRARY("${LIB_NAME}" "${SUBSYS_NAME}" ${srcs} ${incs})
+	set_target_properties("${LIB_NAME}" PROPERTIES OUTPUT_NAME "${LIB_NAME_PREFIX}${LIB_NAME}")
 	target_link_libraries("${LIB_NAME}" pcl_gpu_containers pcl_visualization)
 
 	set(EXT_DEPS "")

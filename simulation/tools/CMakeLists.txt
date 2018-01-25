@@ -30,6 +30,7 @@ if(GLEW_FOUND)
       ${srcs} ${incs} ${compression_incs} ${impl_incs}
       ${VTK_IO_TARGET_LINK_LIBRARIES} 
       ${OPENNI_INCLUDES})
+	set_target_properties("${LIB_NAME}" PROPERTIES OUTPUT_NAME "${LIB_NAME_PREFIX}${LIB_NAME}")
     target_link_libraries(${LIB_NAME} pcl_simulation pcl_common pcl_io 
 	    ${VTK_IO_TARGET_LINK_LIBRARIES} ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES})
 

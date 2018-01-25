@@ -12,6 +12,7 @@ if(build)
     include_directories(SYSTEM ${GTEST_INCLUDE_DIRS} ${GTEST_SRC_DIR})
 
     add_library(pcl_gtest STATIC ${GTEST_SRC_DIR}/src/gtest-all.cc)
+	set_target_properties(pcl_gtest PROPERTIES OUTPUT_NAME "${LIB_NAME_PREFIX}pcl_gtest")
 	
     if( MSVC11 ) # VS2012 doesn't correctly support variadic templates yet
         add_definitions("-D_VARIADIC_MAX=10")

@@ -64,6 +64,7 @@ if (build)
     endif()
 
     PCL_ADD_LIBRARY("${LIB_NAME}" "${SUBSYS_NAME}" ${srcs} ${incs} ${cuda} ${cuda_objs})
+	set_target_properties("${LIB_NAME}" PROPERTIES OUTPUT_NAME "${LIB_NAME_PREFIX}${LIB_NAME}")
     target_link_libraries("${LIB_NAME}" pcl_gpu_containers)
 
     set(EXT_DEPS "")
