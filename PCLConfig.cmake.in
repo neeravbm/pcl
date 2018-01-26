@@ -834,7 +834,9 @@ foreach(component ${PCL_TO_FIND_COMPONENTS})
   # Skip find_library for header only modules
   list(FIND pcl_header_only_components ${component} _is_header_only)
   if(_is_header_only EQUAL -1)
-    find_library(PCL_${COMPONENT}_LIBRARY ${pcl_component}${PCL_RELEASE_SUFFIX}
+    # Without unsetting the variable, it returns the library name without prefix from cache.
+    unset(PCL_${COMPONENT}_LIBRARY CACHE)
+    find_library(PCL_${COMPONENT}_LIBRARY "@LIB_NAME_PREFIX@${pcl_component}${PCL_RELEASE_SUFFIX}"
       HINTS ${PCL_LIBRARY_DIRS}
       DOC "path to ${pcl_component} library"
       NO_DEFAULT_PATH)
@@ -842,7 +844,9 @@ foreach(component ${PCL_TO_FIND_COMPONENTS})
       ${PCL_${COMPONENT}_LIBRARY}
       PATH)
 
-    find_library(PCL_${COMPONENT}_LIBRARY_DEBUG ${pcl_component}${PCL_DEBUG_SUFFIX}
+	# Without unsetting the variable, it returns the library name without prefix from cache.
+	unset(PCL_${COMPONENT}_LIBRARY_DEBUG CACHE)
+    find_library(PCL_${COMPONENT}_LIBRARY_DEBUG "@LIB_NAME_PREFIX@${pcl_component}${PCL_DEBUG_SUFFIX}"
       HINTS ${PCL_LIBRARY_DIRS} 
       DOC "path to ${pcl_component} library debug"
       NO_DEFAULT_PATH)
