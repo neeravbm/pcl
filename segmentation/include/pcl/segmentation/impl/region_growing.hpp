@@ -52,6 +52,10 @@
 #include <cmath>
 #include <time.h>
 
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename PointT, typename NormalT>
 pcl::RegionGrowing<PointT, NormalT>::RegionGrowing () :
@@ -360,6 +364,7 @@ pcl::RegionGrowing<PointT, NormalT>::findPointNeighbours ()
   point_neighbours_.resize (input_->points.size (), neighbours);
   if (input_->is_dense)
   {
+    #pragma omp parallel for private(neighbours,distances)
     for (int i_point = 0; i_point < point_number; i_point++)
     {
       int point_index = (*indices_)[i_point];
@@ -370,6 +375,7 @@ pcl::RegionGrowing<PointT, NormalT>::findPointNeighbours ()
   }
   else
   {
+    #pragma omp parallel for private(neighbours,distances)
     for (int i_point = 0; i_point < point_number; i_point++)
     {
       neighbours.clear ();
@@ -395,6 +401,7 @@ pcl::RegionGrowing<PointT, NormalT>::applySmoothRegionGrowingAlgorithm ()
 
   if (normal_flag_ == true)
   {
+    #pragma omp parallel for schedule(static, 1024)
     for (int i_point = 0; i_point < num_of_pts; i_point++)
     {
       int point_index = (*indices_)[i_point];
@@ -405,6 +412,7 @@ pcl::RegionGrowing<PointT, NormalT>::applySmoothRegionGrowingAlgorithm ()
   }
   else
   {
+    #pragma omp parallel for schedule(static, 1024)
     for (int i_point = 0; i_point < num_of_pts; i_point++)
     {
       int point_index = (*indices_)[i_point];

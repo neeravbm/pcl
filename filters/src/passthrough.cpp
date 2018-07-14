@@ -285,6 +285,7 @@ pcl::PassThrough<pcl::PCLPointCloud2>::applyFilter (PCLPointCloud2 &output)
 
 // Instantiations of specific point types
 PCL_INSTANTIATE(PassThrough, PCL_XYZ_POINT_TYPES)
+PCL_INSTANTIATE(PassThrough, (pcl::Normal))
 
 #endif    // PCL_NO_PRECOMPILE
 

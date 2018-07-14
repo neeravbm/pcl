@@ -43,6 +43,40 @@
 #include <pcl/filters/passthrough.h>
 #include <pcl/common/io.h>
 
+namespace pcl {
+
+  template <typename PointT, class Enable = void>
+  struct PassthroughHelper {
+    static void resetRemovedIndicesXYZValues(typename pcl::PointCloud<PointT> &output, pcl::IndicesPtr removed_indices_, float user_filter_value_) {}
+
+    static bool passNonFiniteEntriesToRemovedIndices(typename pcl::PointCloud<PointT>::ConstPtr input_, pcl::IndicesPtr indices_, pcl::IndicesPtr removed_indices_, bool extract_removed_indices_, int iii, int* rii) {
+      return true;
+    }
+  };
+
+  template <typename PointT>
+  struct PassthroughHelper<PointT, typename std::enable_if<pcl::traits::has_xyz<PointT>::value>::type> {
+    static void resetRemovedIndicesXYZValues(typename pcl::PointCloud<PointT> &output, pcl::IndicesPtr removed_indices_, float user_filter_value_) {
+      for (int rii = 0; rii < static_cast<int> (removed_indices_->size ()); ++rii)  // rii = removed indices iterator
+        output.points[(*removed_indices_)[rii]].x = output.points[(*removed_indices_)[rii]].y = output.points[(*removed_indices_)[rii]].z = user_filter_value_;
+    }
+
+    static bool passNonFiniteEntriesToRemovedIndices(typename pcl::PointCloud<PointT>::ConstPtr input_, pcl::IndicesPtr indices_, pcl::IndicesPtr removed_indices_, bool extract_removed_indices_, int iii, int* rii) {
+      if (!pcl_isfinite (input_->points[(*indices_)[iii]].x) ||
+          !pcl_isfinite (input_->points[(*indices_)[iii]].y) ||
+          !pcl_isfinite (input_->points[(*indices_)[iii]].z))
+      {
+        if (extract_removed_indices_)
+          (*removed_indices_)[*rii++] = (*indices_)[iii];
+        return false;
+      }
+
+      return true;
+    }
+  };
+}
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename PointT> void
 pcl::PassThrough<PointT>::applyFilter (PointCloud &output)
@@ -56,8 +90,9 @@ pcl::PassThrough<PointT>::applyFilter (PointCloud &output)
     extract_removed_indices_ = temp;
 
     output = *input_;
-    for (int rii = 0; rii < static_cast<int> (removed_indices_->size ()); ++rii)  // rii = removed indices iterator
-      output.points[(*removed_indices_)[rii]].x = output.points[(*removed_indices_)[rii]].y = output.points[(*removed_indices_)[rii]].z = user_filter_value_;
+    pcl::PassthroughHelper<PointT>::resetRemovedIndicesXYZValues(output, removed_indices_, user_filter_value_);
+    //for (int rii = 0; rii < static_cast<int> (removed_indices_->size ()); ++rii)  // rii = removed indices iterator
+    //  output.points[(*removed_indices_)[rii]].x = output.points[(*removed_indices_)[rii]].y = output.points[(*removed_indices_)[rii]].z = user_filter_value_;
     if (!pcl_isfinite (user_filter_value_))
       output.is_dense = false;
   }
@@ -85,14 +120,15 @@ pcl::PassThrough<PointT>::applyFilterIndices (std::vector<int> &indices)
     for (int iii = 0; iii < static_cast<int> (indices_->size ()); ++iii)  // iii = input indices iterator
     {
       // Non-finite entries are always passed to removed indices
-      if (!pcl_isfinite (input_->points[(*indices_)[iii]].x) ||
+      if (!pcl::PassthroughHelper<PointT>::passNonFiniteEntriesToRemovedIndices(input_, indices_, removed_indices_, extract_removed_indices_, iii, &rii)) continue;
+      /*if (!pcl_isfinite (input_->points[(*indices_)[iii]].x) ||
           !pcl_isfinite (input_->points[(*indices_)[iii]].y) ||
           !pcl_isfinite (input_->points[(*indices_)[iii]].z))
       {
         if (extract_removed_indices_)
           (*removed_indices_)[rii++] = (*indices_)[iii];
         continue;
-      }
+      }*/
       indices[oii++] = (*indices_)[iii];
     }
   }
@@ -113,14 +149,15 @@ pcl::PassThrough<PointT>::applyFilterIndices (std::vector<int> &indices)
     for (int iii = 0; iii < static_cast<int> (indices_->size ()); ++iii)  // iii = input indices iterator
     {
       // Non-finite entries are always passed to removed indices
-      if (!pcl_isfinite (input_->points[(*indices_)[iii]].x) ||
+      if (!pcl::PassthroughHelper<PointT>::passNonFiniteEntriesToRemovedIndices(input_, indices_, removed_indices_, extract_removed_indices_, iii, &rii)) continue;
+      /*if (!pcl_isfinite (input_->points[(*indices_)[iii]].x) ||
           !pcl_isfinite (input_->points[(*indices_)[iii]].y) ||
           !pcl_isfinite (input_->points[(*indices_)[iii]].z))
       {
         if (extract_removed_indices_)
           (*removed_indices_)[rii++] = (*indices_)[iii];
         continue;
-      }
+      }*/
 
       // Get the field's value
       const uint8_t* pt_data = reinterpret_cast<const uint8_t*> (&input_->points[(*indices_)[iii]]);
